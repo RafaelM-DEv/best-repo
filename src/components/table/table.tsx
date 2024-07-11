@@ -1,6 +1,5 @@
 'use client'
 
-import { useTheme } from '@mui/material/styles';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -18,8 +17,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
 import TableHead from '@mui/material/TableHead';
 
-import { loadRepos } from '../utils/load-data';
-
+import { useTheme } from '@mui/material/styles';
 interface Column {
   id: 'Name' | 'Stars' | 'Forks';
   label: string;
@@ -43,6 +41,7 @@ interface TablePaginationActionsProps {
     newPage: number,
   ) => void;
 }
+
 
 function TablePaginationActions(props: TablePaginationActionsProps) {
   const theme = useTheme();
@@ -110,27 +109,16 @@ interface Repo {
   forks: number;
 }
 
-export default function ListRepo() {
+interface ListRepoProps {
+  data: Repo[];
+}
+
+export default function ListRepo({ data }: ListRepoProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [rows, setRows] = React.useState<Repo[]>([]); // Estado para armazenar os repositórios
-
-  React.useEffect(() => {
-    async function fetchData() {
-      try {
-        const repoData = await loadRepos();
-        const sortedRows = repoData.sort((a, b) => b.stars - a.stars);
-        setRows(sortedRows);
-      } catch (error) {
-        console.error('Error loading repositories:', error);
-      }
-    }
-
-    fetchData();
-  }, []); 
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -164,9 +152,9 @@ export default function ListRepo() {
           </TableHead>
         <TableBody>
           {(rowsPerPage > 0
-            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
-          ).map((row) => (
+            ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : data
+          ).map((row: { id: number, name: string, stars: number, forks: number}) => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">
                 {row.name}
@@ -190,7 +178,7 @@ export default function ListRepo() {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
               colSpan={3}
-              count={rows.length}
+              count={data.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

@@ -5,12 +5,43 @@ import Input from '@mui/joy/Input';
 import IconButton from '@mui/joy/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import * as React from 'react';
+import { loadRepos } from '../components/utils/load-data';
+
+interface Repo {
+  id: number;
+  name: string;
+  stars: number;
+  forks: number;
+}
 
 export default function Home() {
   const [repoName, setRepoName] = React.useState('');
+  const [data, setRows] = React.useState<Repo[]>([]);
+  const [search, setSearch] = React.useState<Repo[]>([])
+
+  React.useEffect(() => {
+    async function fetchData() {
+      try {
+        const repoData = await loadRepos();
+        const sortedRows = repoData.sort((a, b) => b.stars - a.stars);
+        setRows(sortedRows);
+        setSearch(sortedRows)
+      } catch (error) {
+        console.error('Error loading repositories:', error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const handlerString = (str: string): string => {
+    return str.replace(/[^a-zA-Z0-9 ]/g, '').toLowerCase();
+  };
 
   const searchRepo = () => {
-    console.log('Fui chamado', repoName)
+    const index = data.filter(item => handlerString(item.name).includes(handlerString(repoName)))
+
+    setSearch(index)
   }
 
   const handleInputChange = (event: any) => {
@@ -45,7 +76,7 @@ export default function Home() {
           </div>
       </div>
       <div className='mt-10'>
-        <ListRepo/>
+        <ListRepo data={search} />
       </div>
     </main>
   );
