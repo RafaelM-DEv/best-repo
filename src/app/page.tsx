@@ -8,11 +8,13 @@ import * as React from 'react';
 import { loadRepos } from '../components/utils/load-data';
 import Image from 'next/image'
 import logo from '../../public/github-icon-2048x2048-823jqxdr.png'
+
 interface Repo {
   id: number;
+  forks: number;
+  link: string;
   name: string;
   stars: number;
-  forks: number;
 }
 
 export default function Home() {

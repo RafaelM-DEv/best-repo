@@ -102,6 +102,7 @@ interface Repo {
   name: string;
   stars: number;
   forks: number;
+  link: string;
 }
 
 interface ListRepoProps {
@@ -217,10 +218,10 @@ export default function ListRepo({ data }: ListRepoProps) {
           {(rowsPerPage > 0
             ? dataList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : dataList
-          ).map((row: { id: number, name: string, stars: number, forks: number}) => (
+          ).map((row: { id: number, name: string, stars: number, forks: number, link: string}) => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">
-                {row.name}
+              <a href={row.link} target='_blank'> {row.name}</a>
               </TableCell>
               <TableCell style={{ width: 160 }} align="right">
                 {row.stars}
