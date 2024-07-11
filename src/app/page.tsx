@@ -81,7 +81,7 @@ export default function Home() {
       <div className='mt-10'>
         <ListRepo data={search} />
       </div>
-        <div className='mt-10 flex gap-2 items-center'>
+        <div className='mt-10 flex gap-1 items-center whitespace-nowrap'>
           Feito por
           <a href='https://github.com/RafaelM-DEv'>/RafaelM-Dev</a>
           <Image src={logo} alt='Logo github'width={20} />
