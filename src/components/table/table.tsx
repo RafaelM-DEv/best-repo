@@ -197,7 +197,7 @@ export default function ListRepo({ data }: ListRepoProps) {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+      <Table sx={{ minWidth: 300 }} aria-label="custom pagination table">
       <TableHead>
             <TableRow>
               {columns.map((column, index) => (
