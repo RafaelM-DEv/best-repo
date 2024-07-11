@@ -6,7 +6,8 @@ import IconButton from '@mui/joy/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import * as React from 'react';
 import { loadRepos } from '../components/utils/load-data';
-
+import Image from 'next/image'
+import logo from '../../public/github-icon-2048x2048-823jqxdr.png'
 interface Repo {
   id: number;
   name: string;
@@ -78,6 +79,11 @@ export default function Home() {
       <div className='mt-10'>
         <ListRepo data={search} />
       </div>
+        <div className='mt-10 flex gap-2 items-center'>
+          Feito por
+          <a href='https://github.com/RafaelM-DEv'>/RafaelM-Dev</a>
+          <Image src={logo} alt='Logo github'width={20} />
+        </div>
     </main>
   );
 }

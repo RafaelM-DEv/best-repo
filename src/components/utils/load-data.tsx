@@ -1,8 +1,8 @@
 
 export const loadRepos = async () => {
-  // [ ] colocar prop para pegar o nome
-  const username = 'rafaelm-dev'
-  const fullData = await fetch(`https://api.github.com/users/${username}/repos`)
+  // [ ] Poderia criar uma busca pelo userName
+  const userName = 'rafaelm-dev'
+  const fullData = await fetch(`https://api.github.com/users/${userName}/repos`)
   const fullDataJson = await fullData.json()
 
   const fullRepos: [{id: number, name: string, stars: number, forks: number}] = fullDataJson.map((item: any) => {

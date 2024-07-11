@@ -39,7 +39,6 @@ interface TablePaginationActionsProps {
   ) => void;
 }
 
-
 function TablePaginationActions(props: TablePaginationActionsProps) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -98,7 +97,6 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
     </Box>
   );
 }
-
 interface Repo {
   id: number;
   name: string;
@@ -123,7 +121,6 @@ export default function ListRepo({ data }: ListRepoProps) {
   const columns: readonly Column[] = [
     { id: 'Name', label: 'Name', minWidth: 170, 
       onClick: (event) => {
-        // event.currentTarget.classList.toggle('rotate-180');
         const sortedData = [...data].sort((a, b) => {
           if(sortAscending) {
             event.currentTarget.classList.add('rotate-180');
@@ -136,7 +133,7 @@ export default function ListRepo({ data }: ListRepoProps) {
 
             return b.name.localeCompare(a.name);
           }
-           
+
         });
 
         setDataList(sortedData)
