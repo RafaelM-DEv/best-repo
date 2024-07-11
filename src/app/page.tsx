@@ -1,5 +1,22 @@
+'use client'
+
+import ListRepo  from '../components/table/table'
+import Input from '@mui/joy/Input';
+import IconButton from '@mui/joy/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
+import * as React from 'react';
 
 export default function Home() {
+  const [repoName, setRepoName] = React.useState('');
+
+  const searchRepo = () => {
+    console.log('Fui chamado', repoName)
+  }
+
+  const handleInputChange = (event: any) => {
+    setRepoName(event.target.value);
+  };
+
   return (
     <main className="flex flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm">
@@ -7,9 +24,29 @@ export default function Home() {
           Best-Repo
         </p>
       </div>
-      <div className="mt-32">
+      <div className="mt-32 flex flex-col justify-center text-center">
           <h1>Repositórios</h1>
-        </div>
+          <div className='mt-10 flex justify-center items-center gap-3'>
+            <div>
+              <Input
+                  color="neutral"
+                  placeholder="Nome do Repositório"
+                  size="lg"
+                  variant="soft"
+                  value={repoName}
+                  onChange={handleInputChange}
+                />
+            </div>
+            <div>
+              <IconButton onClick={searchRepo} variant="solid" size='lg'>
+                <SearchIcon />
+              </IconButton>
+            </div>
+          </div>
+      </div>
+      <div className='mt-10'>
+        <ListRepo/>
+      </div>
     </main>
   );
 }
